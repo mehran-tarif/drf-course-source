@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Article List</title>
-	<meta charset="utf-8">
-</head>
-<body>
+{% extends 'blog/base.html' %}
+
+{% block main %}
 	{% for article in object_list %}
 
 		<article>
@@ -18,5 +14,4 @@
 	{% empty %}
 		<div>Nothing to show.</div>
 	{% endfor %}
-</body>
-</html>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'blog/base.html' %}
+
+{% block main %}
+	<article>
+		<h2>{{object.title}}</h2>
+		<div>{{object.author}}</div>
+		<div>{{object.publish}}</div>
+		{{object.content|linebreaks}}
+	</article>
+{% endblock %}
