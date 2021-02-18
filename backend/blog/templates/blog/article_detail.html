@@ -1,5 +1,9 @@
 {% extends 'blog/base.html' %}
 
+{% block meta_title %}
+	{{object.title}}
+{% endblock %}
+
 {% block main %}
 	<article>
 		<h2>{{object.title}}</h2>

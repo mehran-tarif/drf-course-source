@@ -1,5 +1,9 @@
 {% extends 'blog/base.html' %}
 
+{% block meta_title %}
+	Articles List
+{% endblock %}
+
 {% block main %}
 	{% for article in object_list %}
 
