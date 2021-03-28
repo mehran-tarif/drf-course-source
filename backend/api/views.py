@@ -1,6 +1,6 @@
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from blog.models import Article
 from .serializers import ArticleSerializer, UserSerializer
 from .permissions import (
@@ -8,24 +8,19 @@ from .permissions import (
 )
 
 # Create your views here.
-class ArticleList(ListCreateAPIView):
+class ArticleViewSet(ModelViewSet):
 	queryset = Article.objects.all()
 	serializer_class = ArticleSerializer
 
-
-class ArticleDetail(RetrieveUpdateDestroyAPIView):
-	queryset = Article.objects.all()
-	serializer_class = ArticleSerializer
-	permission_classes = (IsStaffOrReadOnly, IsAuthorOrReadOnly)
-
-
-class UserList(ListCreateAPIView):
-	queryset = User.objects.all()
-	serializer_class = UserSerializer
-	permission_classes = (IsSuperUserOrStaffReadOnly,)
+	def get_permissions(self):
+		if self.action in ['list', 'create']:
+			permission_classes = [IsStaffOrReadOnly]
+		else:
+			permission_classes = [IsStaffOrReadOnly, IsAuthorOrReadOnly]
+		return [permission() for permission in permission_classes]
 
 
-class UserDetail(RetrieveUpdateDestroyAPIView):
-	queryset = User.objects.all()
+class UserViewSet(ModelViewSet):
+	queryset = get_user_model().objects.all()
 	serializer_class = UserSerializer
 	permission_classes = (IsSuperUserOrStaffReadOnly,)
